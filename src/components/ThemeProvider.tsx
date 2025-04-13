@@ -33,8 +33,6 @@ export function ThemeProvider({
     
     if (theme === "light") {
       root.classList.add("light");
-    } else {
-      root.classList.add("dark");
     }
     
     localStorage.setItem("theme", theme);

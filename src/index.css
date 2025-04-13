@@ -5,6 +5,38 @@
 
 @layer base {
   :root {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 14%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 173 80% 32%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 262 66% 64%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 212 100% 47%;
+
+    --radius: 0.5rem;
+  }
+
+  .light {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
 
@@ -32,37 +64,6 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 142 71% 45%;
-  }
-
-  .dark {
-    /* Midnight Blue Eclipse Palette */
-    --background: 242 49% 25%; /* #272757 - Darkest Blue */
-    --foreground: 210 40% 98%;
-
-    --card: 242 20% 60%; /* #8686AC - Muted Lavender Blue */
-    --card-foreground: 210 40% 98%;
-
-    --popover: 242 30% 41%; /* #505081 - Medium Blue */
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 242 69% 17%; /* #0F0E47 - Deep Midnight Blue */
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 242 30% 41%; /* #505081 - Medium Blue */
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 242 20% 60%; /* #8686AC - Muted Lavender Blue */
-    --muted-foreground: 215 20% 80%;
-
-    --accent: 242 20% 60%; /* #8686AC - Muted Lavender Blue */
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 242 20% 60%; /* #8686AC - Muted Lavender Blue */
-    --input: 242 30% 41%; /* #505081 - Medium Blue */
-    --ring: 242 69% 17%; /* #0F0E47 - Deep Midnight Blue */
   }
 }
 
