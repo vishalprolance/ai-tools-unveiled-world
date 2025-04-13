@@ -7,7 +7,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold text-foreground flex items-center">
           <span className="text-accent">AI</span>
-          <span className="ml-1">Tools Unveiled</span>
+          <span className="ml-1">Hub</span>
         </Link>
         <div className="flex space-x-4">
           <Link to="/" className="text-foreground hover:text-accent transition-colors">

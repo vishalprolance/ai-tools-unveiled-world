@@ -17,7 +17,7 @@ const Index = () => {
       <section className="bg-gradient-to-br from-background via-card to-background py-20 px-4">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="text-accent">AI Tools</span> Unveiled World
+            <span className="text-accent">AI</span> Hub
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10">
             Your comprehensive directory of artificial intelligence tools from around the world.
@@ -90,7 +90,7 @@ const Index = () => {
       <footer className="bg-background py-8 px-4 border-t border-border mt-auto">
         <div className="container mx-auto text-center">
           <p className="text-muted-foreground">
-            © {new Date().getFullYear()} AI Tools Unveiled World. All rights reserved.
+            © {new Date().getFullYear()} AI Hub. All rights reserved.
           </p>
         </div>
       </footer>
