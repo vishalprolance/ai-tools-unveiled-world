@@ -1,5 +1,5 @@
 
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "dark" | "light";
 
@@ -22,18 +22,17 @@ export function ThemeProvider({
   children,
   defaultTheme = "dark",
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem("theme") as Theme) || defaultTheme
-  );
+  // Get the stored theme from localStorage or use defaultTheme
+  const [theme, setTheme] = useState<Theme>(() => {
+    const storedTheme = localStorage.getItem("theme") as Theme;
+    return storedTheme || defaultTheme;
+  });
 
   useEffect(() => {
     const root = window.document.documentElement;
     
     root.classList.remove("light", "dark");
-    
-    if (theme === "light") {
-      root.classList.add("light");
-    }
+    root.classList.add(theme);
     
     localStorage.setItem("theme", theme);
   }, [theme]);
