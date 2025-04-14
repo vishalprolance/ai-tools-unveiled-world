@@ -1,18 +1,17 @@
 
-import { categories } from "../data/toolsData";
-
 interface CategoryFilterProps {
   selectedCategory: string | null;
   onSelectCategory: (category: string | null) => void;
+  categories: string[];
 }
 
 const CategoryFilter: React.FC<CategoryFilterProps> = ({ 
   selectedCategory, 
-  onSelectCategory 
+  onSelectCategory,
+  categories
 }) => {
   return (
     <div className="mb-8">
-      <h2 className="text-lg font-semibold mb-4">Categories</h2>
       <div className="flex flex-wrap gap-2">
         <button
           className={`px-4 py-2 rounded-full text-sm transition-colors ${

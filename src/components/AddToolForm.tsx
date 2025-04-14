@@ -1,0 +1,184 @@
+
+import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
+import { Tool, categories } from "../data/toolsData";
+import { Plus } from "lucide-react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+const toolSchema = z.object({
+  name: z.string().min(2, {
+    message: "Tool name must be at least 2 characters.",
+  }),
+  description: z.string().min(10, {
+    message: "Description must be at least 10 characters.",
+  }),
+  category: z.string({
+    required_error: "Please select a category.",
+  }),
+  url: z.string().url({
+    message: "Please enter a valid URL.",
+  }),
+});
+
+type ToolFormValues = z.infer<typeof toolSchema>;
+
+interface AddToolFormProps {
+  onAddTool: (tool: Tool) => void;
+  categories: string[];
+}
+
+export function AddToolForm({ onAddTool, categories }: AddToolFormProps) {
+  const [open, setOpen] = React.useState(false);
+  
+  const form = useForm<ToolFormValues>({
+    resolver: zodResolver(toolSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      category: "",
+      url: "",
+    },
+  });
+
+  function onSubmit(data: ToolFormValues) {
+    const newTool: Tool = {
+      id: Date.now().toString(),
+      name: data.name,
+      description: data.description,
+      category: data.category,
+      url: data.url,
+    };
+    
+    onAddTool(newTool);
+    toast.success("Tool added successfully!");
+    form.reset();
+    setOpen(false);
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="flex items-center gap-2">
+          <Plus size={16} /> Add New Tool
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle>Add New AI Tool</DialogTitle>
+          <DialogDescription>
+            Add details about a new AI tool to the collection.
+          </DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tool Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter tool name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter a description of the tool"
+                      {...field}
+                      rows={3}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((category) => (
+                        <SelectItem key={category} value={category}>
+                          {category}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="url"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Website URL</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              <Button type="submit" className="w-full sm:w-auto">
+                Add Tool
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+}
