@@ -7,6 +7,7 @@ import CategoryFilter from "../components/CategoryFilter";
 import SearchBar from "../components/SearchBar";
 import { AddToolForm } from "../components/AddToolForm";
 import { AddCategoryForm } from "../components/AddCategoryForm";
+import { CsvToolUpload } from "../components/CsvToolUpload";
 import { AdminLogin } from "../components/AdminLogin";
 import { useAdmin } from "../context/AdminContext";
 import { Button } from "../components/ui/button";
@@ -64,6 +65,13 @@ const Tools = () => {
     // Save to localStorage
     saveTools(updatedTools);
   };
+  
+  const handleBulkAddTools = (newTools: Tool[]) => {
+    const updatedTools = [...newTools, ...tools];
+    setTools(updatedTools);
+    // Save to localStorage
+    saveTools(updatedTools);
+  };
 
   const handleAddCategory = (newCategory: string) => {
     const updatedCategories = [...categories, newCategory];
@@ -87,7 +95,10 @@ const Tools = () => {
             <SearchBar onSearch={setSearchQuery} />
             <div className="flex items-center gap-2">
               {isAdmin && (
-                <AddToolForm onAddTool={handleAddTool} categories={categories} />
+                <>
+                  <AddToolForm onAddTool={handleAddTool} categories={categories} />
+                  <CsvToolUpload onUploadTools={handleBulkAddTools} existingTools={tools} />
+                </>
               )}
               <AdminLogin />
             </div>
