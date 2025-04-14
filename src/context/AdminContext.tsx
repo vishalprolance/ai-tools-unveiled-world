@@ -9,8 +9,8 @@ type AdminContextType = {
 
 const AdminContext = createContext<AdminContextType | undefined>(undefined);
 
-// This would be a proper hash in a real application
-const ADMIN_PASSWORD = "admin123";
+// Hidden admin password
+const ADMIN_PASSWORD = "iamsrk";
 
 export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);

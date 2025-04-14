@@ -1,4 +1,3 @@
-
 export interface Tool {
   id: string;
   name: string;
@@ -6,6 +5,7 @@ export interface Tool {
   category: string;
   url: string;
   image?: string;
+  free: boolean;
 }
 
 export const categories = [
@@ -28,6 +28,7 @@ export const toolsData: Tool[] = [
     description: "Conversational AI assistant capable of generating human-like text based on prompts.",
     category: "Chatbots",
     url: "https://chat.openai.com",
+    free: true,
   },
   {
     id: "2",
@@ -35,6 +36,7 @@ export const toolsData: Tool[] = [
     description: "AI art generator that creates images from textual descriptions.",
     category: "Image Generation",
     url: "https://www.midjourney.com",
+    free: false,
   },
   {
     id: "3",
@@ -42,6 +44,7 @@ export const toolsData: Tool[] = [
     description: "Creates realistic images and art from natural language descriptions.",
     category: "Image Generation",
     url: "https://openai.com/dall-e-3",
+    free: false,
   },
   {
     id: "4",
@@ -49,6 +52,7 @@ export const toolsData: Tool[] = [
     description: "AI pair programmer that helps you write code faster and with less work.",
     category: "Code & Development",
     url: "https://github.com/features/copilot",
+    free: false,
   },
   {
     id: "5",
@@ -56,6 +60,7 @@ export const toolsData: Tool[] = [
     description: "AI content generator for blogs, social media, and marketing copy.",
     category: "Writing & Content",
     url: "https://www.jasper.ai",
+    free: false,
   },
   {
     id: "6",
@@ -63,6 +68,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered transcription service that can record and transcribe meetings and interviews.",
     category: "Audio & Voice",
     url: "https://otter.ai",
+    free: true,
   },
   {
     id: "7",
@@ -70,6 +76,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered writing assistant for grammar checking and style improvements.",
     category: "Writing & Content",
     url: "https://www.grammarly.com",
+    free: true,
   },
   {
     id: "8",
@@ -77,6 +84,7 @@ export const toolsData: Tool[] = [
     description: "AI video generation and editing platform for creative professionals.",
     category: "Video Generation",
     url: "https://runwayml.com",
+    free: false,
   },
   {
     id: "9",
@@ -84,6 +92,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered writing assistant integrated with Notion workspace.",
     category: "Productivity",
     url: "https://notion.so/product/ai",
+    free: false,
   },
   {
     id: "10",
@@ -91,6 +100,7 @@ export const toolsData: Tool[] = [
     description: "AI video generation platform that turns text into professional videos with AI avatars.",
     category: "Video Generation",
     url: "https://www.synthesia.io",
+    free: false,
   },
   {
     id: "11",
@@ -98,6 +108,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered search engine that provides direct answers to questions with citations.",
     category: "Productivity",
     url: "https://www.perplexity.ai",
+    free: false,
   },
   {
     id: "12",
@@ -105,6 +116,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered noise cancellation app for clear audio during calls.",
     category: "Audio & Voice",
     url: "https://krisp.ai",
+    free: true,
   },
   {
     id: "13",
@@ -112,6 +124,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered language learning platform with personalized lessons.",
     category: "Education",
     url: "https://www.duolingo.com",
+    free: false,
   },
   {
     id: "14",
@@ -119,6 +132,7 @@ export const toolsData: Tool[] = [
     description: "Conversational AI assistant focused on helpfulness, harmlessness, and honesty.",
     category: "Chatbots",
     url: "https://www.anthropic.com/claude",
+    free: true,
   },
   {
     id: "15",
@@ -126,6 +140,7 @@ export const toolsData: Tool[] = [
     description: "Design platform with AI-powered features for creating graphics and presentations.",
     category: "Design",
     url: "https://www.canva.com",
+    free: false,
   },
   {
     id: "16",
@@ -133,6 +148,7 @@ export const toolsData: Tool[] = [
     description: "All-in-one audio/video editing with AI-powered transcription and voice cloning.",
     category: "Audio & Voice",
     url: "https://www.descript.com",
+    free: true,
   },
   {
     id: "17",
@@ -140,6 +156,7 @@ export const toolsData: Tool[] = [
     description: "Open-source AI art generator for creating detailed images from text descriptions.",
     category: "Image Generation",
     url: "https://stablediffusionweb.com",
+    free: false,
   },
   {
     id: "18",
@@ -147,6 +164,7 @@ export const toolsData: Tool[] = [
     description: "AI copywriting tool for creating marketing content, emails, and social media posts.",
     category: "Writing & Content",
     url: "https://www.copy.ai",
+    free: false,
   },
   {
     id: "19",
@@ -154,6 +172,7 @@ export const toolsData: Tool[] = [
     description: "AI-enhanced learning platform with flashcards and study tools.",
     category: "Education",
     url: "https://quizlet.com",
+    free: true,
   },
   {
     id: "20",
@@ -161,6 +180,7 @@ export const toolsData: Tool[] = [
     description: "Marketing and sales platform with AI-powered customer service tools.",
     category: "Business",
     url: "https://www.hubspot.com/products/crm/ai-capabilities",
+    free: false,
   },
   {
     id: "21",
@@ -168,6 +188,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered photo editor that enhances selfies and creates artistic avatars.",
     category: "Image Generation",
     url: "https://prisma-ai.com/lensa",
+    free: true,
   },
   {
     id: "22",
@@ -175,6 +196,7 @@ export const toolsData: Tool[] = [
     description: "Conversational AI service by Google that can generate text, translate languages, and more.",
     category: "Chatbots",
     url: "https://bard.google.com",
+    free: true,
   },
   {
     id: "23",
@@ -182,6 +204,7 @@ export const toolsData: Tool[] = [
     description: "Google's most capable AI model, optimized for multimodal understanding and reasoning.",
     category: "Chatbots",
     url: "https://gemini.google.com",
+    free: false,
   },
   {
     id: "24",
@@ -189,6 +212,7 @@ export const toolsData: Tool[] = [
     description: "Family of creative generative AI models built for commercial designers.",
     category: "Image Generation",
     url: "https://www.adobe.com/products/firefly.html",
+    free: false,
   },
   {
     id: "25",
@@ -196,6 +220,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered assistant integrated with Microsoft 365 applications.",
     category: "Productivity",
     url: "https://copilot.microsoft.com",
+    free: false,
   },
   {
     id: "26",
@@ -203,6 +228,7 @@ export const toolsData: Tool[] = [
     description: "AI voice generator with realistic text-to-speech and voice cloning.",
     category: "Audio & Voice",
     url: "https://elevenlabs.io",
+    free: true,
   },
   {
     id: "27",
@@ -210,6 +236,7 @@ export const toolsData: Tool[] = [
     description: "Workflow automation platform with AI capabilities for connecting apps.",
     category: "Productivity",
     url: "https://zapier.com",
+    free: true,
   },
   {
     id: "28",
@@ -217,6 +244,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered storytelling format that generates presentations from prompts.",
     category: "Productivity",
     url: "https://tome.app",
+    free: false,
   },
   {
     id: "29",
@@ -224,6 +252,7 @@ export const toolsData: Tool[] = [
     description: "AI-powered content management system for digital teams.",
     category: "Business",
     url: "https://www.contentful.com",
+    free: false,
   },
   {
     id: "30",
@@ -231,5 +260,6 @@ export const toolsData: Tool[] = [
     description: "AI music generator that creates music from text prompts.",
     category: "Audio & Voice",
     url: "https://www.riffusion.com",
+    free: false,
   },
 ];

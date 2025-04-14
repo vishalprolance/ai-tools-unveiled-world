@@ -10,7 +10,14 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
     <div className="tool-card">
       <div className="flex justify-between items-start mb-3">
         <h3 className="text-xl font-bold text-foreground">{tool.name}</h3>
-        <span className="category-pill">{tool.category}</span>
+        <div className="flex gap-2">
+          <span className={`text-xs px-2 py-1 rounded-full ${tool.free ? 
+            'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' : 
+            'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400'}`}>
+            {tool.free ? 'Free' : 'Paid'}
+          </span>
+          <span className="category-pill">{tool.category}</span>
+        </div>
       </div>
       <p className="text-muted-foreground mb-4">{tool.description}</p>
       <a 

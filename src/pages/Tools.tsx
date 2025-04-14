@@ -9,6 +9,7 @@ import { AddToolForm } from "../components/AddToolForm";
 import { AddCategoryForm } from "../components/AddCategoryForm";
 import { AdminLogin } from "../components/AdminLogin";
 import { useAdmin } from "../context/AdminContext";
+import { Button } from "../components/ui/button";
 
 const Tools = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -16,6 +17,7 @@ const Tools = () => {
   const [tools, setTools] = useState<Tool[]>(toolsData);
   const [filteredTools, setFilteredTools] = useState<Tool[]>(tools);
   const [categories, setCategories] = useState<string[]>(initialCategories);
+  const [priceFilter, setPriceFilter] = useState<"all" | "free" | "paid">("all");
   const { isAdmin } = useAdmin();
 
   useEffect(() => {
@@ -24,6 +26,13 @@ const Tools = () => {
     // Apply category filter if selected
     if (selectedCategory) {
       result = result.filter(tool => tool.category === selectedCategory);
+    }
+    
+    // Apply price filter
+    if (priceFilter === "free") {
+      result = result.filter(tool => tool.free);
+    } else if (priceFilter === "paid") {
+      result = result.filter(tool => !tool.free);
     }
     
     // Apply search filter if query exists
@@ -37,7 +46,7 @@ const Tools = () => {
     }
     
     setFilteredTools(result);
-  }, [selectedCategory, searchQuery, tools]);
+  }, [selectedCategory, searchQuery, tools, priceFilter]);
 
   const handleAddTool = (newTool: Tool) => {
     setTools(prevTools => [newTool, ...prevTools]);
@@ -90,6 +99,37 @@ const Tools = () => {
                 onSelectCategory={setSelectedCategory} 
                 categories={categories}
               />
+              
+              {/* Price Filter */}
+              <div className="mt-8 mb-6">
+                <h3 className="font-semibold mb-3">Price</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant={priceFilter === "all" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setPriceFilter("all")}
+                    className={priceFilter === "all" ? "bg-accent text-accent-foreground" : ""}
+                  >
+                    All
+                  </Button>
+                  <Button
+                    variant={priceFilter === "free" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setPriceFilter("free")}
+                    className={priceFilter === "free" ? "bg-accent text-accent-foreground" : ""}
+                  >
+                    Free
+                  </Button>
+                  <Button
+                    variant={priceFilter === "paid" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setPriceFilter("paid")}
+                    className={priceFilter === "paid" ? "bg-accent text-accent-foreground" : ""}
+                  >
+                    Paid
+                  </Button>
+                </div>
+              </div>
               
               {/* Results Count */}
               <div className="mb-8 p-4 bg-card rounded-lg">

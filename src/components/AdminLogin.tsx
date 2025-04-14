@@ -55,9 +55,6 @@ export const AdminLogin: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <p className="text-xs text-muted-foreground">
-              For demo purposes, use "admin123" as the password
-            </p>
           </div>
           <Button type="submit" className="w-full">Login</Button>
         </form>
