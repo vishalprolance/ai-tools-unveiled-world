@@ -34,6 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 
 const toolSchema = z.object({
   name: z.string().min(2, {
@@ -48,6 +49,7 @@ const toolSchema = z.object({
   url: z.string().url({
     message: "Please enter a valid URL.",
   }),
+  free: z.boolean().default(false),
 });
 
 type ToolFormValues = z.infer<typeof toolSchema>;
@@ -67,6 +69,7 @@ export function AddToolForm({ onAddTool, categories }: AddToolFormProps) {
       description: "",
       category: "",
       url: "",
+      free: false,
     },
   });
 
@@ -77,6 +80,7 @@ export function AddToolForm({ onAddTool, categories }: AddToolFormProps) {
       description: data.description,
       category: data.category,
       url: data.url,
+      free: data.free,
     };
     
     onAddTool(newTool);
@@ -168,6 +172,26 @@ export function AddToolForm({ onAddTool, categories }: AddToolFormProps) {
                     <Input placeholder="https://example.com" {...field} />
                   </FormControl>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="free"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                  <div className="space-y-0.5">
+                    <FormLabel>Free Tool</FormLabel>
+                    <div className="text-sm text-muted-foreground">
+                      Mark if this tool offers a free version
+                    </div>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />
