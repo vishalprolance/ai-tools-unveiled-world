@@ -2,7 +2,7 @@ export interface Tool {
   id: string;
   name: string;
   description: string;
-  category: string;
+  category: string | string[];
   url: string;
   image?: string;
   free: boolean;
@@ -21,7 +21,7 @@ export const categories = [
   "Business",
 ];
 
-export const toolsData: Tool[] = [
+const initialToolsData: Tool[] = [
   {
     id: "1",
     name: "ChatGPT",
@@ -263,3 +263,30 @@ export const toolsData: Tool[] = [
     free: false,
   },
 ];
+
+const loadTools = (): Tool[] => {
+  const savedTools = localStorage.getItem("aiToolsData");
+  if (savedTools) {
+    return JSON.parse(savedTools);
+  }
+  return initialToolsData;
+};
+
+const loadCategories = (): string[] => {
+  const savedCategories = localStorage.getItem("aiToolsCategories");
+  if (savedCategories) {
+    return JSON.parse(savedCategories);
+  }
+  return categories;
+};
+
+export const saveTools = (tools: Tool[]): void => {
+  localStorage.setItem("aiToolsData", JSON.stringify(tools));
+};
+
+export const saveCategories = (categories: string[]): void => {
+  localStorage.setItem("aiToolsCategories", JSON.stringify(categories));
+};
+
+export const toolsData: Tool[] = loadTools();
+export const availableCategories: string[] = loadCategories();

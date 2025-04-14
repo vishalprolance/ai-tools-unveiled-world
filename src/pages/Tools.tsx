@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { toolsData, categories as initialCategories, Tool } from "../data/toolsData";
+import { toolsData, availableCategories, saveTools, saveCategories, Tool } from "../data/toolsData";
 import Navbar from "../components/Navbar";
 import ToolList from "../components/ToolList";
 import CategoryFilter from "../components/CategoryFilter";
@@ -16,7 +16,7 @@ const Tools = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [tools, setTools] = useState<Tool[]>(toolsData);
   const [filteredTools, setFilteredTools] = useState<Tool[]>(tools);
-  const [categories, setCategories] = useState<string[]>(initialCategories);
+  const [categories, setCategories] = useState<string[]>(availableCategories);
   const [priceFilter, setPriceFilter] = useState<"all" | "free" | "paid">("all");
   const { isAdmin } = useAdmin();
 
@@ -25,7 +25,13 @@ const Tools = () => {
     
     // Apply category filter if selected
     if (selectedCategory) {
-      result = result.filter(tool => tool.category === selectedCategory);
+      result = result.filter(tool => {
+        // Handle both string and array categories
+        if (Array.isArray(tool.category)) {
+          return tool.category.includes(selectedCategory);
+        }
+        return tool.category === selectedCategory;
+      });
     }
     
     // Apply price filter
@@ -38,22 +44,32 @@ const Tools = () => {
     // Apply search filter if query exists
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      result = result.filter(tool => 
-        tool.name.toLowerCase().includes(query) || 
-        tool.description.toLowerCase().includes(query) ||
-        tool.category.toLowerCase().includes(query)
-      );
+      result = result.filter(tool => {
+        const categoryMatch = Array.isArray(tool.category)
+          ? tool.category.some(cat => cat.toLowerCase().includes(query))
+          : tool.category.toLowerCase().includes(query);
+
+        return tool.name.toLowerCase().includes(query) || 
+          tool.description.toLowerCase().includes(query) ||
+          categoryMatch;
+      });
     }
     
     setFilteredTools(result);
   }, [selectedCategory, searchQuery, tools, priceFilter]);
 
   const handleAddTool = (newTool: Tool) => {
-    setTools(prevTools => [newTool, ...prevTools]);
+    const updatedTools = [newTool, ...tools];
+    setTools(updatedTools);
+    // Save to localStorage
+    saveTools(updatedTools);
   };
 
   const handleAddCategory = (newCategory: string) => {
-    setCategories(prevCategories => [...prevCategories, newCategory]);
+    const updatedCategories = [...categories, newCategory];
+    setCategories(updatedCategories);
+    // Save to localStorage
+    saveCategories(updatedCategories);
   };
 
   return (

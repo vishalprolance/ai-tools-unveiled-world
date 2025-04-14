@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Tool, categories } from "../data/toolsData";
+import { Tool, saveTools } from "../data/toolsData";
 import { Plus } from "lucide-react";
 
 import {
@@ -35,6 +35,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Badge } from "@/components/ui/badge";
+import { CheckIcon } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const toolSchema = z.object({
   name: z.string().min(2, {
@@ -43,8 +59,8 @@ const toolSchema = z.object({
   description: z.string().min(10, {
     message: "Description must be at least 10 characters.",
   }),
-  category: z.string({
-    required_error: "Please select a category.",
+  categories: z.array(z.string()).min(1, {
+    message: "Select at least one category.",
   }),
   url: z.string().url({
     message: "Please enter a valid URL.",
@@ -67,7 +83,7 @@ export function AddToolForm({ onAddTool, categories }: AddToolFormProps) {
     defaultValues: {
       name: "",
       description: "",
-      category: "",
+      categories: [],
       url: "",
       free: false,
     },
@@ -78,7 +94,7 @@ export function AddToolForm({ onAddTool, categories }: AddToolFormProps) {
       id: Date.now().toString(),
       name: data.name,
       description: data.description,
-      category: data.category,
+      category: data.categories, // Now storing an array of categories
       url: data.url,
       free: data.free,
     };
@@ -137,27 +153,82 @@ export function AddToolForm({ onAddTool, categories }: AddToolFormProps) {
             />
             <FormField
               control={form.control}
-              name="category"
+              name="categories"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {categories.map((category) => (
-                        <SelectItem key={category} value={category}>
-                          {category}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Categories</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={`w-full justify-between ${!field.value.length && "text-muted-foreground"}`}
+                        >
+                          {field.value.length > 0
+                            ? `${field.value.length} ${field.value.length === 1 ? "category" : "categories"} selected`
+                            : "Select categories"}
+                          <span className="ml-2 rounded-full bg-muted px-1.5 py-0.5 text-xs font-medium opacity-70">
+                            {field.value.length}
+                          </span>
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0" align="start">
+                      <Command>
+                        <CommandInput placeholder="Search categories..." />
+                        <CommandList>
+                          <CommandEmpty>No categories found.</CommandEmpty>
+                          <CommandGroup>
+                            <ScrollArea className="h-64">
+                              {categories.map((category) => (
+                                <CommandItem
+                                  key={category}
+                                  value={category}
+                                  onSelect={() => {
+                                    const isSelected = field.value.includes(category);
+                                    const updatedCategories = isSelected
+                                      ? field.value.filter((c) => c !== category)
+                                      : [...field.value, category];
+                                    form.setValue("categories", updatedCategories, { shouldValidate: true });
+                                  }}
+                                >
+                                  <div className="flex items-center gap-2 w-full">
+                                    <div className={`border-2 rounded-sm w-4 h-4 flex items-center justify-center ${field.value.includes(category) ? "bg-primary border-primary" : "border-muted"}`}>
+                                      {field.value.includes(category) && (
+                                        <CheckIcon className="h-3 w-3 text-primary-foreground" />
+                                      )}
+                                    </div>
+                                    <span>{category}</span>
+                                  </div>
+                                </CommandItem>
+                              ))}
+                            </ScrollArea>
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  <div className="flex flex-wrap gap-1 mt-2">
+                    {field.value.map((category) => (
+                      <Badge key={category} variant="secondary" className="text-xs">
+                        {category}
+                        <button
+                          type="button"
+                          className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring"
+                          onClick={() => {
+                            form.setValue(
+                              "categories",
+                              field.value.filter((c) => c !== category),
+                              { shouldValidate: true }
+                            );
+                          }}
+                        >
+                          ×
+                        </button>
+                      </Badge>
+                    ))}
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}

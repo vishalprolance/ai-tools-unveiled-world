@@ -6,6 +6,9 @@ interface ToolCardProps {
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
+  // Handle category display for both string and array types
+  const categories = Array.isArray(tool.category) ? tool.category : [tool.category];
+  
   return (
     <div className="tool-card">
       <div className="flex justify-between items-start mb-3">
@@ -16,10 +19,16 @@ const ToolCard: React.FC<ToolCardProps> = ({ tool }) => {
             'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400'}`}>
             {tool.free ? 'Free' : 'Paid'}
           </span>
-          <span className="category-pill">{tool.category}</span>
         </div>
       </div>
       <p className="text-muted-foreground mb-4">{tool.description}</p>
+      <div className="flex flex-wrap gap-1 mb-3">
+        {categories.map((category, index) => (
+          <span key={index} className="category-pill text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+            {category}
+          </span>
+        ))}
+      </div>
       <a 
         href={tool.url} 
         target="_blank" 
