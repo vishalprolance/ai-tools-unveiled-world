@@ -7,6 +7,8 @@ import CategoryFilter from "../components/CategoryFilter";
 import SearchBar from "../components/SearchBar";
 import { AddToolForm } from "../components/AddToolForm";
 import { AddCategoryForm } from "../components/AddCategoryForm";
+import { AdminLogin } from "../components/AdminLogin";
+import { useAdmin } from "../context/AdminContext";
 
 const Tools = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -14,6 +16,7 @@ const Tools = () => {
   const [tools, setTools] = useState<Tool[]>(toolsData);
   const [filteredTools, setFilteredTools] = useState<Tool[]>(tools);
   const [categories, setCategories] = useState<string[]>(initialCategories);
+  const { isAdmin } = useAdmin();
 
   useEffect(() => {
     let result = tools;
@@ -57,7 +60,12 @@ const Tools = () => {
           </p>
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
             <SearchBar onSearch={setSearchQuery} />
-            <AddToolForm onAddTool={handleAddTool} categories={categories} />
+            <div className="flex items-center gap-2">
+              {isAdmin && (
+                <AddToolForm onAddTool={handleAddTool} categories={categories} />
+              )}
+              <AdminLogin />
+            </div>
           </div>
         </div>
       </section>
@@ -70,10 +78,12 @@ const Tools = () => {
             <div className="md:col-span-1">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold">Categories</h2>
-                <AddCategoryForm 
-                  onAddCategory={handleAddCategory} 
-                  existingCategories={categories} 
-                />
+                {isAdmin && (
+                  <AddCategoryForm 
+                    onAddCategory={handleAddCategory} 
+                    existingCategories={categories} 
+                  />
+                )}
               </div>
               <CategoryFilter 
                 selectedCategory={selectedCategory} 
