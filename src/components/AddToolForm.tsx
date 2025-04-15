@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { Tool, saveTools } from "../data/toolsData";
+import { Tool } from "../data/toolsData";
 import { Plus } from "lucide-react";
 
 import {
@@ -27,13 +27,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import {
   Command,
@@ -94,7 +87,7 @@ export function AddToolForm({ onAddTool, categories }: AddToolFormProps) {
       id: Date.now().toString(),
       name: data.name,
       description: data.description,
-      category: data.categories, // Now storing an array of categories
+      category: data.categories, // This is correctly storing an array of categories
       url: data.url,
       free: data.free,
     };
